@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yuri.helpdesk.domain.Tecnico;
 import com.yuri.helpdesk.domain.dtos.TecnicoDTO;
+import com.yuri.helpdesk.services.TecnicoService;
 
 @RestController
 @RequestMapping(value = "/tecnicos")
