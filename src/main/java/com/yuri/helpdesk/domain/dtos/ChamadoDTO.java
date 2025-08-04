@@ -3,6 +3,8 @@ package com.yuri.helpdesk.domain.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yuri.helpdesk.domain.Chamado;
 
@@ -16,11 +18,17 @@ private Integer id;
 	private LocalDate dataAbertura = LocalDate.now();
 	@JsonFormat( pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento; 
+	@NotNull(message = "o campo PRIORIDADE é requerido")
 	private Integer prioridade;
+	@NotNull(message = "o campo STATUS é requerido")
 	private Integer status; 
+	@NotNull(message = "o campo TÍTULO é requerido")
 	private String titulo; 
+	@NotNull(message = "o campo OBSERVAÇÕES é requerido")
 	private String observacoes;
+	@NotNull(message = "o campo TÉCNICO é requerido")
 	private Integer tecnico;
+	@NotNull(message = "o campo CLIENTE é requerido")
 	private Integer cliente;
 	private String  nomeTecnico;
 	private String nomeCliente;
