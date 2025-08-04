@@ -3,6 +3,8 @@ package com.yuri.helpdesk.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,27 @@ public class TecnicoService {
 	
 	public Tecnico create(TecnicoDTO objDTO) {
 		objDTO.setId(null);
-		validaPorCpfEEmail(objDTO);
+		this.validaPorCpfEEmail(objDTO);
 		Tecnico newObj = new Tecnico(objDTO);
 		return repository.save(newObj);
+	}
+	
+	public Tecnico update(Integer id, @Valid TecnicoDTO objDTO) {
+		objDTO.setId(id);
+		Tecnico oldObj = findById(id); //find by id, tendo em visto que é um put
+		this.validaPorCpfEEmail(objDTO);
+		oldObj = new Tecnico(objDTO);
+		return repository.save(oldObj);
+	}
+	
+	public void delete(Integer id) {
+		Tecnico obj = findById(id);
+		
+		if(obj.getChamados().size() > 0) {
+			throw new DataIntegrityViolationException("Tecnico possui ordens de serviço e não pode ser deletado!");
+		}
+		
+		repository.deleteById(id);
 	}
 
 	private void validaPorCpfEEmail(TecnicoDTO objDTO) {
